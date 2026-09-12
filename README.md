@@ -36,7 +36,7 @@ Stop debugging and terminate the **fixture watch** task when finished. See [Gett
 - [Troubleshooting](https://github.com/JDeffner/live-webview/wiki/Troubleshooting)
 - [API reference](https://github.com/JDeffner/live-webview/wiki/API-reference)
 - [Development checks](docs/development.md) and [validation evidence](docs/validation.md)
-- [Marketplace release workflow](docs/releases.md), including the `VSCE_PAT` setup and stable/prerelease behavior.
+- [Marketplace release workflow](docs/releases.md), including Microsoft Entra registration, publishing without PATs, and stable/prerelease behavior.
 
 Host code changes still require a rebuild and debug restart. Remote hosts, browser VS Code, message inspection, scenarios, and framework HMR are outside v0.1. The preview is distributed through GitHub; Marketplace publishing is not yet active, and the helper is not on npm.
 
