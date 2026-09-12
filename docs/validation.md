@@ -48,3 +48,13 @@ The approved logo was exported to a canonical SVG, a 1280 ? 400 README header, a
 For the branded MIT release, typecheck, lint, all 15 unit tests, VSIX/tarball packaging, and the packaged independent Windows host test passed. The final archive was checked for the icon, MIT license, and correct README/setup links; the tarball includes its MIT license. The final 20 Test-mode samples measured 0?1 ms from signal receipt to callback start and 29?66 ms to frontend readiness. These samples are separate from the Development-mode measurements above.
 
 The GitHub Actions workflow runs Linux host checks on each push. Its run results are the source of truth for Linux validation. A human keyboard/accessibility pass remains unverified.
+
+## Wiki and Marketplace workflow, 13 September 2026
+
+Source version 0.1.1 prepares the JDeffner.live-webview identity and a release-triggered Marketplace workflow. No new release or Marketplace upload was made during these checks. The wiki pages also supply the bundled offline Setup guide.
+
+Typecheck, lint, and all 26 unit tests passed. The 11 new release tests cover stable/prerelease selection, invalid tags, version mismatch, drafts, incomplete events, and edits. Actionlint 1.7.12 accepted both workflows. Local documentation and wiki links resolved to existing files/pages.
+
+Both stable and prerelease VSIX packages were created and inspected for the expected prerelease metadata, JDeffner publisher, 0.1.1 version, and complete offline guide. Windows VS Code 1.74.0 real-host checks passed for the two-extension launch, the packaged prerelease with the independent 0.1.1 helper tarball, companion absence, production without the companion, and Restricted Mode. The packaged run recorded 20 successful frontend boots and host round trips. Owned test hosts exited.
+
+Actual Marketplace authentication and upload remain untested because VSCE_PAT will be supplied later. The release workflow also requires a new matching numeric tag; the existing v0.1.0 tag predates it. Linux results for this change are available in GitHub Actions after the source push. The human keyboard/accessibility pass remains unverified.

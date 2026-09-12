@@ -38,7 +38,7 @@ export async function connect(context: vscode.ExtensionContext, options: Integra
     return handle;
   };
   try {
-    const id = options.companionId ?? 'local.live-webview';
+    const id = options.companionId ?? 'JDeffner.live-webview';
     const extension = vscode.extensions.getExtension(id);
     if (!extension) throw new Error(`Install ${id} in this Extension Development Host to enable reload`);
     const api: unknown = await extension.activate();

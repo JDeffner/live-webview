@@ -13,9 +13,10 @@ const name = [packaged ? 'packaged' : 'dual', independent && 'independent', abse
 const fixture = resolve(independent ? 'artifacts/fixture' : 'examples/esbuild');
 const buildResult = spawnSync(process.execPath, [resolve(fixture, 'build.mjs'), ...(development ? [] : ['--test']), ...(production ? ['--production'] : [])], { stdio: 'inherit', windowsHide: true });
 if (buildResult.status !== 0) throw new Error('Fixture build failed');
-if (production && /connectDevtools|registerTarget|registerBuild|local\.live-webview/.test(await readFile(resolve(fixture, 'dist/extension.js'), 'utf8'))) throw new Error('Production bundle retained development integration');
+if (production && /connectDevtools|registerTarget|registerBuild|JDeffner\.live-webview/.test(await readFile(resolve(fixture, 'dist/extension.js'), 'utf8'))) throw new Error('Production bundle retained development integration');
 const profile = resolve('.vscode-test', `profile-${name}`);
-const extensions = resolve('.vscode-test', packaged ? 'extensions-live-webview-packaged' : 'extensions-empty');
+const extension = JSON.parse(await readFile('packages/extension/package.json', 'utf8'));
+const extensions = resolve('.vscode-test', packaged ? `extensions-${extension.publisher}.${extension.name}-packaged` : 'extensions-empty');
 await mkdir(resolve(profile, 'User'), { recursive: true });
 await writeFile(resolve(profile, 'User/settings.json'), JSON.stringify({ 'security.workspace.trust.enabled': untrusted, 'security.workspace.trust.startupPrompt': 'never', 'workbench.startupEditor': 'none', 'extensions.autoCheckUpdates': false, 'extensions.autoUpdate': false }));
 await mkdir('artifacts', { recursive: true });
@@ -23,7 +24,7 @@ const vscodeExecutablePath = await downloadAndUnzipVSCode('1.74.0');
 delete process.env.ELECTRON_RUN_AS_NODE;
 if (packaged) {
   const cli = resolve(dirname(vscodeExecutablePath), process.platform === 'darwin' ? '../Resources/app/out/cli.js' : 'resources/app/out/cli.js');
-  const result = spawnSync(vscodeExecutablePath, [cli, '--ms-enable-electron-run-as-node', '--user-data-dir', profile, '--extensions-dir', extensions, '--install-extension', resolve('artifacts/live-webview-0.1.0.vsix'), '--force'], { env: { ...process.env, ELECTRON_RUN_AS_NODE: '1' }, stdio: 'inherit', windowsHide: true });
+  const result = spawnSync(vscodeExecutablePath, [cli, '--ms-enable-electron-run-as-node', '--user-data-dir', profile, '--extensions-dir', extensions, '--install-extension', resolve(`artifacts/live-webview-${extension.version}.vsix`), '--force'], { env: { ...process.env, ELECTRON_RUN_AS_NODE: '1' }, stdio: 'inherit', windowsHide: true });
   if (result.status !== 0) throw new Error('VSIX installation failed');
 }
 const resultPath = resolve('artifacts', `samples-${name}.json`);

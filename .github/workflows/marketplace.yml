@@ -1,0 +1,68 @@
+name: Publish to VS Code Marketplace
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: marketplace-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Validate release version and channel
+        id: release
+        run: node scripts/release.mjs
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test
+      - name: Package the selected channel
+        env:
+          PRE_RELEASE: ${{ steps.release.outputs.pre_release }}
+        run: |
+          args=()
+          if [ "$PRE_RELEASE" = "true" ]; then args+=(--pre-release); fi
+          pnpm package "${args[@]}"
+      - run: pnpm prepare-fixture
+      - run: xvfb-run -a pnpm integration-test --packaged --independent
+      - name: Preserve tested packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: marketplace-${{ steps.release.outputs.version }}
+          path: |
+            artifacts/*.vsix
+            artifacts/*.tgz
+          if-no-files-found: error
+          overwrite: true
+      - name: Publish tested VSIX
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+          VSIX_PATH: ${{ steps.release.outputs.vsix }}
+          PRE_RELEASE: ${{ steps.release.outputs.pre_release }}
+        run: |
+          if [ -z "$VSCE_PAT" ]; then
+            echo "::error::Add the VSCE_PAT repository Actions secret, then re-run this failed job. No Marketplace upload was attempted."
+            exit 1
+          fi
+          args=(--packagePath "$VSIX_PATH")
+          if [ "$PRE_RELEASE" = "true" ]; then args+=(--pre-release); fi
+          pnpm exec vsce publish "${args[@]}"

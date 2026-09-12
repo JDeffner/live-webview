@@ -25,6 +25,7 @@ it('supports Development and the separate Test entry, disposing registered build
     integration.dispose();
   }
   expect(activate).toHaveBeenCalledTimes(2); expect(registerBuild).toHaveBeenCalledTimes(2); expect(stop).toHaveBeenCalledTimes(2);
+  expect(mock.extensions.getExtension).toHaveBeenCalledWith('JDeffner.live-webview');
 });
 it('reports absence, incompatibility, or activation failure once without application failure', async () => {
   for (const extension of [undefined, { activate: async () => ({ apiVersion: 2 }) }, { activate: async () => { throw new Error('activation failed'); } }]) {

@@ -19,7 +19,7 @@ This guide describes the current v0.1 boundary. Use the smallest complete change
 | Target | One registered live webview instance, keyed by owner extension ID plus instance ID. |
 | Build group | Targets that share one successful-build signal, keyed by owner plus build ID. |
 | Revision | An opaque unique build token. Order comes from publication, not token sorting. Manual reload creates its own token. |
-| Companion | `packages/extension`, currently identified as `local.live-webview`. |
+| Companion | `packages/extension`, currently identified as `JDeffner.live-webview`. |
 | Helper | `packages/helper`, currently named `@webview-dev/helper`. |
 | Development Host | The VS Code window running the target extension, separate from the source-editing window. |
 | Ready acknowledgement | Fixture-only evidence that a new frontend boot completed a host state round trip. |
@@ -37,7 +37,7 @@ This guide describes the current v0.1 boundary. Use the smallest complete change
 | Host test failures or timing evidence | [run.mjs](tests/integration/run.mjs) launches hosts and joins logs; [suite.ts](tests/integration/suite.ts) asserts actual frontend acknowledgements. |
 | Build or package resolution | [build.mjs](scripts/build.mjs), [package.mjs](scripts/package.mjs), [prepare-fixture.mjs](scripts/prepare-fixture.mjs), and package manifests. |
 
-Read [README.md](README.md) for setup and the public usage contract. Read [docs/validation.md](docs/validation.md) for dated evidence and its limits, not as a promise that the current checkout still passes. [CI](.github/workflows/ci.yml) records the Linux check sequence. Root [.vscode](.vscode/launch.json) launches both extensions or the installed companion; the [fixture launch](examples/esbuild/.vscode/launch.json) supports the independent copy.
+Read [README.md](README.md) for the quick start and [docs/wiki/Home.md](docs/wiki/Home.md) for the full usage guide and public contract. Wiki Markdown is maintained in `docs/wiki/` and copied to the GitHub wiki repository when publishing documentation. Read [docs/releases.md](docs/releases.md) for the Marketplace workflow and credential setup. Read [docs/validation.md](docs/validation.md) for dated evidence and its limits, not as a promise that the current checkout still passes. [CI](.github/workflows/ci.yml) records the Linux check sequence. Root [.vscode](.vscode/launch.json) launches both extensions or the installed companion; the [fixture launch](examples/esbuild/.vscode/launch.json) supports the independent copy.
 
 ## Trace a reload
 
@@ -99,8 +99,8 @@ Test observable results. For asynchronous UI work, wait for a revision and boot 
 ## Files, documentation, and completion
 
 - For brand or artwork changes, read [DESIGN.md](DESIGN.md) and [art-instructions.html](art-instructions.html). Prioritize clarity, recognition, and utility; personality is a small supporting note. The approved source is `docs/branding/mark.svg`; `pnpm brand` generates the README header and packaged icon. Native controls continue to use VS Code's theme.
-- Edit source, not `dist/`. Builds generate helper declarations, companion code, the integration suite, and `packages/extension/dist/setup.md` from the root README. The companion's `.vscodeignore` is an allowlist; include new runtime files explicitly.
+- Edit source, not `dist/`. Builds generate helper declarations, companion code, the integration suite, and `packages/extension/dist/setup.md` from the usage pages in `docs/wiki/`. The companion's `.vscodeignore` is an allowlist; include new runtime files explicitly.
 - `artifacts/`, `.vscode-test/`, `.webview-dev/`, `dist/`, and `node_modules/` are generated or local state. Keep machine paths, signals, profiles, VSIX files, tarballs, and temporary experiments out of tracked source. Resolve deletion targets before removing any generated tree.
 - Update the existing README section when setup or public behavior changes. Keep contract definitions in types and behavioral examples in tests. Add internal documentation only for a durable decision or a trap that crosses code boundaries. Update this guide when its navigation or commands become stale.
-- Preserve unrelated work. No commit, push, publication, or name reservation without Joel's request. Joel selected the extension name **Live Webview** (`live-webview`). The publisher and helper package scope remain provisional; the project uses the MIT license, with Rubik under its separate OFL. This is an independent repo; do not modify or import source from the Paradox Toolkit as an incidental part of this work.
+- Preserve unrelated work. No commit, push, publication, or name reservation without Joel's request. Joel selected the extension name **Live Webview** (`live-webview`). The publisher is `JDeffner`; the helper package scope remains provisional; the project uses the MIT license, with Rubik under its separate OFL. This is an independent repo; do not modify or import source from the Paradox Toolkit as an incidental part of this work.
 - Finish with the changed behavior, the checks actually run, and concrete remaining limits. Stop owned test processes. Treat previous sample timings and validation reports as dated evidence; do not claim Linux, keyboard, or accessibility verification without performing it.

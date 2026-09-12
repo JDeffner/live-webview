@@ -42,7 +42,7 @@ export async function run() {
     const b = await waitFor(() => fixture.boots.get('two'), 'panel two boot');
     assert.equal(a.session, fixture.session);
     if (process.env.FIXTURE_ABSENT === '1' || process.env.FIXTURE_PRODUCTION === '1' || process.env.FIXTURE_UNTRUSTED === '1') {
-      if (process.env.FIXTURE_ABSENT === '1') assert.equal(vscode.extensions.getExtension('local.live-webview'), undefined);
+      if (process.env.FIXTURE_ABSENT === '1') assert.equal(vscode.extensions.getExtension('JDeffner.live-webview'), undefined);
       if (process.env.FIXTURE_UNTRUSTED === '1') assert.equal(vscode.workspace.isTrusted, false);
       await frontendBuild('inert change'); await delay(350);
       assert.equal(fixture.boots.get('one')!.boot, a.boot);
@@ -51,7 +51,7 @@ export async function run() {
       console.log('INERT PASS: application boots and handles messages without active integration');
       return;
     }
-    const api = await vscode.extensions.getExtension('local.live-webview')!.activate(); assert.equal(api.apiVersion, 1);
+    const api = await vscode.extensions.getExtension('JDeffner.live-webview')!.activate(); assert.equal(api.apiVersion, 1);
     await vscode.commands.executeCommand('webviewDev.setup');
     assert.ok(vscode.window.activeTextEditor?.document.getText().includes('Signal successful builds'));
     await vscode.commands.executeCommand('workbench.action.closeActiveEditor');
