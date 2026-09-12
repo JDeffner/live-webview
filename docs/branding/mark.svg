@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" fill="none">
+  <title>Live Webview</title>
+  <desc>A mint window and overlapping white preview show the same heading and text line.</desc>
+  <!-- Export of the approved study. Both content areas are 3:2; the front is scaled by 2/3. -->
+  <rect x="20" y="30" width="110" height="90" rx="17.778" fill="#78DDB4"/>
+  <path d="M30 50H120V102.222Q120 110 112.222 110H37.778Q30 110 30 102.222Z" fill="#202623"/>
+  <rect x="48" y="60.8" width="54" height="7.2" rx="1" fill="#F4F5ED"/>
+  <rect x="48" y="72.8" width="36" height="4.8" rx="1" fill="#F4F5ED"/>
+  <rect x="70" y="80" width="70" height="50" rx="10" fill="#202623"/>
+  <rect x="75" y="85" width="60" height="40" rx="5" fill="#F4F5ED"/>
+  <rect x="87" y="92.2" width="36" height="4.8" rx="1" fill="#202623"/>
+  <rect x="87" y="100.2" width="24" height="3.2" rx="1" fill="#202623"/>
+</svg>

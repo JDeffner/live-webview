@@ -1,0 +1,4 @@
+{
+  "version": "0.2.0",
+  "configurations": [{ "name": "Fixture (installed companion)", "type": "extensionHost", "request": "launch", "runtimeExecutable": "${execPath}", "args": ["${workspaceFolder}", "--extensionDevelopmentPath=${workspaceFolder}", "--user-data-dir=${workspaceFolder}/.dev-profile", "--extensions-dir=${workspaceFolder}/.dev-extensions"], "outFiles": ["${workspaceFolder}/dist/**/*.js"], "preLaunchTask": "watch" }]
+}

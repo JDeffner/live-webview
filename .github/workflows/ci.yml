@@ -1,0 +1,26 @@
+name: checks
+on: [push, pull_request]
+jobs:
+  linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test
+      - run: xvfb-run -a pnpm integration-test
+      - run: pnpm package
+      - run: pnpm prepare-fixture
+      - run: xvfb-run -a pnpm integration-test --packaged --independent
+      - run: xvfb-run -a pnpm integration-test --absent
+      - run: xvfb-run -a pnpm integration-test --production --absent
+      - run: xvfb-run -a pnpm integration-test --untrusted

@@ -1,0 +1,44 @@
+{
+  "name": "@webview-dev/helper",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./testing": {
+      "types": "./dist/testing.d.ts",
+      "default": "./dist/testing.js"
+    },
+    "./esbuild": {
+      "types": "./dist/esbuild.d.ts",
+      "default": "./dist/esbuild.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.txt"
+  ],
+  "peerDependencies": {
+    "esbuild": ">=0.25.0 <1"
+  },
+  "peerDependenciesMeta": {
+    "esbuild": {
+      "optional": true
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JDeffner/live-webview.git",
+    "directory": "packages/helper"
+  },
+  "bugs": {
+    "url": "https://github.com/JDeffner/live-webview/issues"
+  },
+  "homepage": "https://github.com/JDeffner/live-webview#readme"
+}

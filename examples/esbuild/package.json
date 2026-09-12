@@ -1,0 +1,14 @@
+{
+  "name": "live-webview-fixture", "displayName": "Live Webview Fixture", "version": "0.1.0",
+  "publisher": "local", "private": true, "license": "UNLICENSED", "engines": { "vscode": "^1.74.0" },
+  "main": "dist/extension.js", "extensionKind": ["workspace"],
+  "activationEvents": ["onStartupFinished"],
+  "capabilities": { "untrustedWorkspaces": { "supported": true } },
+  "contributes": {
+    "commands": [{ "command": "webviewFixture.open", "title": "Webview Fixture: Open Panels" }],
+    "views": { "explorer": [{ "id": "webviewFixture.sidebar", "name": "Webview Fixture", "type": "webview" }] }
+  },
+  "dependencies": { "@webview-dev/helper": "workspace:*" },
+  "devDependencies": { "esbuild": "0.25.12" },
+  "scripts": { "build": "node build.mjs", "watch": "node build.mjs --watch", "production": "node build.mjs --production" }
+}

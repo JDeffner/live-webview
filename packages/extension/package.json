@@ -1,0 +1,101 @@
+{
+  "name": "live-webview",
+  "displayName": "Live Webview",
+  "version": "0.1.0",
+  "publisher": "local",
+  "description": "Targeted reload for extension-owned VS Code webviews.",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "main": "./dist/extension.js",
+  "extensionKind": [
+    "workspace"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Reload is disabled until the workspace is trusted."
+    },
+    "virtualWorkspaces": false
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "webviewDev.reloadTarget",
+        "title": "Live Webview: Reload Target",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "webviewDev.pauseTarget",
+        "title": "Live Webview: Pause Target",
+        "icon": "$(debug-pause)"
+      },
+      {
+        "command": "webviewDev.resumeTarget",
+        "title": "Live Webview: Resume Target",
+        "icon": "$(debug-start)"
+      },
+      {
+        "command": "webviewDev.openLogs",
+        "title": "Live Webview: Open Logs",
+        "icon": "$(output)"
+      },
+      {
+        "command": "webviewDev.setup",
+        "title": "Live Webview: Setup"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "webviewDev.targets",
+          "name": "Live Webview"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "webviewDev.targets",
+        "contents": "Register a webview from its owner extension.\n[Setup instructions](command:webviewDev.setup)",
+        "when": "isWorkspaceTrusted"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "webviewDev.openLogs",
+          "when": "view == webviewDev.targets",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "webviewDev.reloadTarget",
+          "when": "view == webviewDev.targets && viewItem =~ /^target/",
+          "group": "inline@1"
+        },
+        {
+          "command": "webviewDev.pauseTarget",
+          "when": "view == webviewDev.targets && viewItem == targetWatching",
+          "group": "inline@2"
+        },
+        {
+          "command": "webviewDev.resumeTarget",
+          "when": "view == webviewDev.targets && viewItem == targetPaused",
+          "group": "inline@2"
+        }
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JDeffner/live-webview.git",
+    "directory": "packages/extension"
+  },
+  "bugs": {
+    "url": "https://github.com/JDeffner/live-webview/issues"
+  },
+  "homepage": "https://github.com/JDeffner/live-webview#readme",
+  "icon": "media/icon.png"
+}

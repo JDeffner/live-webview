@@ -1,0 +1,4 @@
+{
+  "version": "2.0.0",
+  "tasks": [{ "label": "watch", "type": "shell", "command": "pnpm watch", "isBackground": true, "problemMatcher": { "owner": "fixture", "pattern": { "regexp": "^(.*):(\\d+):(\\d+): (.*)$", "file": 1, "line": 2, "column": 3, "message": 4 }, "background": { "activeOnStart": true, "beginsPattern": ".*", "endsPattern": "Fixture watch ready" } } }]
+}

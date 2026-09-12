@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "build", "type": "shell", "command": "pnpm build", "problemMatcher": [] },
+    {
+      "label": "fixture watch", "type": "shell", "command": "pnpm --dir examples/esbuild watch", "isBackground": true,
+      "dependsOn": "build",
+      "problemMatcher": { "owner": "webview-fixture", "pattern": { "regexp": "^(.*):(\\d+):(\\d+): (.*)$", "file": 1, "line": 2, "column": 3, "message": 4 }, "background": { "activeOnStart": true, "beginsPattern": ".*", "endsPattern": "Fixture watch ready" } }
+    }
+  ]
+}

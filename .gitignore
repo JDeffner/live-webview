@@ -1,0 +1,9 @@
+node_modules/
+dist/
+artifacts/
+.vscode-test/
+.webview-dev/
+*.tgz
+*.vsix
+.dev-profile/
+.dev-extensions/

@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Fixture + companion", "type": "extensionHost", "request": "launch", "runtimeExecutable": "${execPath}",
+      "args": ["${workspaceFolder}/examples/esbuild", "--extensionDevelopmentPath=${workspaceFolder}/examples/esbuild", "--extensionDevelopmentPath=${workspaceFolder}/packages/extension", "--user-data-dir=${workspaceFolder}/.vscode-test/manual-profile", "--extensions-dir=${workspaceFolder}/.vscode-test/manual-extensions"],
+      "outFiles": ["${workspaceFolder}/packages/extension/dist/**/*.js", "${workspaceFolder}/examples/esbuild/dist/**/*.js"], "preLaunchTask": "fixture watch"
+    },
+    {
+      "name": "Fixture + installed companion", "type": "extensionHost", "request": "launch", "runtimeExecutable": "${execPath}",
+      "args": ["${workspaceFolder}/examples/esbuild", "--extensionDevelopmentPath=${workspaceFolder}/examples/esbuild", "--user-data-dir=${workspaceFolder}/.vscode-test/manual-profile", "--extensions-dir=${workspaceFolder}/.vscode-test/manual-extensions"],
+      "outFiles": ["${workspaceFolder}/examples/esbuild/dist/**/*.js"], "preLaunchTask": "fixture watch"
+    }
+  ]
+}
