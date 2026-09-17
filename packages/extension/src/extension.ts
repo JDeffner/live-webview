@@ -22,7 +22,7 @@ export function activate(context: vscode.ExtensionContext): DevtoolsApiV1 {
       return item;
     },
   } });
-  tree.message = !vscode.workspace.isTrusted ? 'Reload is disabled in Restricted Mode. Trust this workspace to enable development integration.' : vscode.env.remoteName ? 'v0.1 supports local desktop extension hosts only.' : undefined;
+  tree.message = !vscode.workspace.isTrusted ? 'Reload is disabled in Restricted Mode. Trust this workspace to enable development integration.' : vscode.env.remoteName ? 'Live Webview supports local desktop extension hosts only.' : undefined;
   const select = async (value: unknown) => {
     if (typeof value === 'string') return registry.targets.get(value);
     if (value && typeof value === 'object' && 'key' in value && typeof value.key === 'string') return registry.targets.get(value.key);

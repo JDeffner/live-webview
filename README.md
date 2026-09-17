@@ -4,12 +4,12 @@
 
 Reload your extension's webviews after a successful frontend build, inside the real Extension Development Host. Live Webview supplies targeted reload and native controls. Your extension keeps its panels, HTML, resource URLs, state, and message handlers.
 
-**[Usage wiki](https://github.com/JDeffner/live-webview/wiki)** · **[Downloads](https://github.com/JDeffner/live-webview/releases)**
+**[Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=JDeffner.live-webview)** · **[Usage wiki](https://github.com/JDeffner/live-webview/wiki)** · **[Downloads](https://github.com/JDeffner/live-webview/releases)**
 
 ## Quick start
 
-1. Download the VSIX and helper tarball from [GitHub Releases](https://github.com/JDeffner/live-webview/releases). Install the VSIX with **Extensions: Install from VSIX...** in the profile used by your target's Development Host.
-2. Add the matching helper to your target: `pnpm add -D "path/to/webview-dev-helper-0.1.1.tgz"`.
+1. Install **Live Webview** (`JDeffner.live-webview`) from the [Marketplace](https://marketplace.visualstudio.com/items?itemName=JDeffner.live-webview) in the profile used by your target's Development Host. You can also install the VSIX from [GitHub Releases](https://github.com/JDeffner/live-webview/releases) with **Extensions: Install from VSIX...**. Download the helper tarball from the same release.
+2. Add the matching helper to your target: `pnpm add -D "path/to/webview-dev-helper-1.0.0.tgz"`.
 3. [Connect the helper](https://github.com/JDeffner/live-webview/wiki/Integration) in your development build. Register each build, then each panel or resolved sidebar view with a callback that regenerates its HTML.
 4. [Add a successful-build signal](https://github.com/JDeffner/live-webview/wiki/Build-signals) to your frontend build. Start the watch task, launch the target with F5, and open its normal webview.
 5. Save a frontend change. After the build succeeds, visible registered targets reload. Use **Explorer → Live Webview** to reload one instance, pause, or resume. **Live Webview: Open Logs** shows diagnostics.
@@ -38,7 +38,7 @@ Stop debugging and terminate the **fixture watch** task when finished. See [Gett
 - [Development checks](docs/development.md) and [validation evidence](docs/validation.md)
 - [Marketplace release workflow](docs/releases.md), including the one-time publishing token setup and automatic stable/prerelease uploads.
 
-Host code changes still require a rebuild and debug restart. Remote hosts, browser VS Code, message inspection, scenarios, and framework HMR are outside v0.1. The extension ID is `JDeffner.live-webview`. GitHub Releases provides the VSIX and matching helper tarball; the helper is not on npm.
+Host code changes still require a rebuild and debug restart. Remote hosts, browser VS Code, message inspection, scenarios, and framework HMR are outside v1.0. The extension ID is `JDeffner.live-webview`. GitHub Releases provides the VSIX and matching helper tarball; the helper is not on npm.
 
 ## License
 

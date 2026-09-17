@@ -1,10 +1,10 @@
 # Getting started
 
-Start with the fixture if you want to see a reload before changing your own extension. To integrate an existing project, install the preview, then follow [Integration](https://github.com/JDeffner/live-webview/wiki/Integration) and [Build signals](https://github.com/JDeffner/live-webview/wiki/Build-signals).
+Start with the fixture if you want to see a reload before changing your own extension. To integrate an existing project, install the extension, then follow [Integration](https://github.com/JDeffner/live-webview/wiki/Integration) and [Build signals](https://github.com/JDeffner/live-webview/wiki/Build-signals).
 
-## Install the preview release
+## Install the stable release
 
-Download `live-webview-0.1.1.vsix` and `webview-dev-helper-0.1.1.tgz` from the release. In your target development profile, run **Extensions: Install from VSIX...** and select the VSIX. Follow [Add the helper to a target](https://github.com/JDeffner/live-webview/wiki/Integration) to connect your webview and frontend build. The standalone fixture below demonstrates the full setup in an isolated host.
+Download `live-webview-1.0.0.vsix` and `webview-dev-helper-1.0.0.tgz` from the release. In your target development profile, run **Extensions: Install from VSIX...** and select the VSIX. Follow [Add the helper to a target](https://github.com/JDeffner/live-webview/wiki/Integration) to connect your webview and frontend build. The standalone fixture below demonstrates the full setup in an isolated host.
 
 ## Run the fixture
 
@@ -31,12 +31,12 @@ Stop the debug session, then terminate the **fixture watch** task when finished.
 
 ```sh
 pnpm package
-code --user-data-dir .vscode-test/manual-profile --extensions-dir .vscode-test/manual-extensions --install-extension artifacts/live-webview-0.1.1.vsix --force
+code --user-data-dir .vscode-test/manual-profile --extensions-dir .vscode-test/manual-extensions --install-extension artifacts/live-webview-1.0.0.vsix --force
 ```
 
 Select **Fixture + installed companion**, then press F5 and open the fixture panels. This launch loads only the target as a development extension. The companion comes from the isolated extensions directory used above. Installing it only in the parent source window is insufficient; it must be available in the target's host.
 
-These commands use the current source version, `0.1.1`. The original GitHub v0.1.0 downloads use the placeholder ID `local.live-webview`. Current source uses `JDeffner.live-webview`. Uninstall or disable the old `local` companion in that profile before using the new one, so both copies do not contribute the same commands. Keep the companion and helper from the same release or build; see [Integration](https://github.com/JDeffner/live-webview/wiki/Integration) when mixing versions deliberately.
+These commands use the current source version, `1.0.0`. The original GitHub v0.1.0 downloads use the placeholder ID `local.live-webview`. Current source uses `JDeffner.live-webview`. Uninstall or disable the old `local` companion in that profile before using the new one, so both copies do not contribute the same commands. Keep the companion and helper from the same release or build; see [Integration](https://github.com/JDeffner/live-webview/wiki/Integration) when mixing versions deliberately.
 
 To exercise the helper tarball without workspace links:
 
@@ -59,7 +59,7 @@ Keep your target's launch configuration. For an isolated installation, add these
 From that target's project root, install the downloaded VSIX into those same directories before launching:
 
 ```sh
-code --user-data-dir .dev-profile --extensions-dir .dev-extensions --install-extension "absolute/path/to/live-webview-0.1.1.vsix"
+code --user-data-dir .dev-profile --extensions-dir .dev-extensions --install-extension "absolute/path/to/live-webview-1.0.0.vsix"
 ```
 
 Replace the quoted path with your actual download path. Add `.dev-profile/`, `.dev-extensions/`, and `.webview-dev/` to the target's ignore files. Launch with F5, open the target's normal webview, and look for its registration in **Explorer → Live Webview** in the new host.

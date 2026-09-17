@@ -13,7 +13,7 @@ Reload your extension's webviews after a successful frontend build, inside the r
 ## Set up your extension
 
 1. Install **Live Webview** (`JDeffner.live-webview`) in the profile used by your target's Extension Development Host.
-2. Download the helper tarball from [GitHub Releases](https://github.com/JDeffner/live-webview/releases) and add it to your target: `pnpm add -D "path/to/webview-dev-helper-0.1.1.tgz"`.
+2. Download the helper tarball from [GitHub Releases](https://github.com/JDeffner/live-webview/releases) and add it to your target: `pnpm add -D "path/to/webview-dev-helper-1.0.0.tgz"`.
 3. [Connect the helper](https://github.com/JDeffner/live-webview/wiki/Integration) in your development build. Register each build and each panel or resolved sidebar view with a callback that regenerates its HTML.
 4. Add a [successful-build signal](https://github.com/JDeffner/live-webview/wiki/Build-signals). An esbuild adapter is included. Start your watch task, launch the target with F5, and open its webview.
 5. Edit the frontend. After the build succeeds, the affected visible views reload.

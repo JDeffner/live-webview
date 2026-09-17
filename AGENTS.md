@@ -2,7 +2,7 @@
 
 Live Webview shortens the frontend edit/build/preview loop for extension-owned webviews. A companion VS Code extension schedules targeted reloads; an opt-in helper connects the target extension to it. The target keeps ownership of its webviews, HTML, resource URLs, application state, and message handlers.
 
-This guide describes the current v0.1 boundary. Use the smallest complete change that solves Joel's request. Inspect the affected implementation, callers, and tests before editing. Resolve routine choices from the repo and proceed; do not turn this guide into an extra approval step. Explicit task instructions take precedence over its defaults.
+This guide describes the v1.0 boundary, which retains the original targeted-reload scope. Use the smallest complete change that solves Joel's request. Inspect the affected implementation, callers, and tests before editing. Resolve routine choices from the repo and proceed; do not turn this guide into an extra approval step. Explicit task instructions take precedence over its defaults.
 
 ## Preserve these properties
 

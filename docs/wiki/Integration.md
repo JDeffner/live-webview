@@ -5,10 +5,10 @@
 Install the local tarball as a development dependency. Keep the target's existing tasks and F5 setup.
 
 ```sh
-pnpm add -D /absolute/path/to/webview-dev-helper-0.1.1.tgz
+pnpm add -D /absolute/path/to/webview-dev-helper-1.0.0.tgz
 ```
 
-Use the helper that matches your companion. Version 0.1.1 defaults to `JDeffner.live-webview`; the original v0.1.0 preview used `local.live-webview`. To connect a newer helper to the old VSIX deliberately, pass `{ enabled: true, companionId: 'local.live-webview' }` to `connectDevtools`.
+Use the helper that matches your companion. Version 1.0.0 defaults to `JDeffner.live-webview`; the original v0.1.0 preview used `local.live-webview`. To connect a newer helper to the old VSIX deliberately, pass `{ enabled: true, companionId: 'local.live-webview' }` to `connectDevtools`.
 
 Bundle this host code with `__WEBVIEW_DEV__` defined as `true` only in your explicit development build and as `false` in production:
 

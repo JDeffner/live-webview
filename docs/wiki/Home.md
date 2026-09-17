@@ -8,7 +8,7 @@ It is a developer tool for webviews that you own. Install the companion, connect
 
 | Task | Guide |
 | --- | --- |
-| Try a working example or install the preview | [Getting started](https://github.com/JDeffner/live-webview/wiki/Getting-started) |
+| Try a working example or install the extension | [Getting started](https://github.com/JDeffner/live-webview/wiki/Getting-started) |
 | Connect panels and sidebar views in your extension | [Integration](https://github.com/JDeffner/live-webview/wiki/Integration) |
 | Set up esbuild or another build tool | [Build signals](https://github.com/JDeffner/live-webview/wiki/Build-signals) |
 | Reload, pause, resume, and read status | [Controls](https://github.com/JDeffner/live-webview/wiki/Controls) |
@@ -20,6 +20,6 @@ It is a developer tool for webviews that you own. Install the companion, connect
 
 Use local desktop VS Code 1.74 or newer, a Node extension host, and a trusted workspace. The target must run in Development mode with the helper explicitly enabled. The companion must be available in that same host.
 
-Download the preview VSIX and matching helper tarball from [GitHub Releases](https://github.com/JDeffner/live-webview/releases). Version 0.1.1 uses the extension ID `JDeffner.live-webview`. The helper is not on npm. Remote hosts, browser VS Code, framework HMR, message inspection, and automatic attachment to arbitrary extensions are outside this version.
+Download the stable VSIX and matching helper tarball from [GitHub Releases](https://github.com/JDeffner/live-webview/releases). Version 1.0.0 uses the extension ID `JDeffner.live-webview`. The helper is not on npm. Remote hosts, browser VS Code, framework HMR, message inspection, and automatic attachment to arbitrary extensions are outside this version.
 
 [Source repository](https://github.com/JDeffner/live-webview) · [Development checks](https://github.com/JDeffner/live-webview/blob/main/docs/development.md) · [Validation evidence](https://github.com/JDeffner/live-webview/blob/main/docs/validation.md) · [Report an issue](https://github.com/JDeffner/live-webview/issues)

@@ -1,7 +1,7 @@
 {
   "name": "live-webview",
   "displayName": "Live Webview",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "publisher": "JDeffner",
   "description": "Targeted reload for extension-owned VS Code webviews.",
   "license": "MIT",

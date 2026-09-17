@@ -14,7 +14,7 @@ The workflow uses one secret, `VSCE_PAT`. This route does not need an Entra app 
 4. Open the repository's [environments](https://github.com/JDeffner/live-webview/settings/environments), select **marketplace**, and add an **environment secret** named `VSCE_PAT` with that token as its value. It must be a secret, not a variable.
 5. Once this workflow is on `main`, open **Actions > Publish to VS Code Marketplace > Run workflow** and select `main`. This checks publisher access without uploading anything.
 
-The environment permits tags matching `v*` and the `main` branch. Keep those restrictions: releases run from tags, while the manual credential check runs only on `main`. No token has been supplied or Marketplace upload verified as part of preparing this change.
+The environment permits tags matching `v*` and the `main` branch. Keep those restrictions: releases run from tags, while the manual credential check runs only on `main`. Authentication and Marketplace publication were verified on 17 September 2026 for the [0.1.2 prerelease](https://github.com/JDeffner/live-webview/actions/runs/35184807354).
 
 Microsoft's [publishing guide](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#get-a-personal-access-token) documents the token scope and organization selection. If policy prevents creating the token, retain the exact error; changing the workflow cannot override an account policy.
 
@@ -28,16 +28,16 @@ The earlier Entra workflow has been replaced by this simpler token flow. `AZURE_
 
 ## Make a release
 
-1. Set `packages/extension/package.json` to the version you will release. Use numeric `MAJOR.MINOR.PATCH`. Update the root version to match; update the helper version when its contents change. The current source is prepared as `0.1.1`, without creating a release.
-2. Commit the changes and make a matching GitHub release tag, such as `v0.1.1`, from a commit containing this workflow. The workflow rejects a mismatch between the tag and extension manifest.
+1. Set `packages/extension/package.json` to the version you will release. Use numeric `MAJOR.MINOR.PATCH`. Update the root version to match; update the helper version when releasing a new helper. The first stable release aligns both packages at `1.0.0` and retains API v1.
+2. Commit the changes and make a matching GitHub release tag, such as `v1.0.0`, from a commit containing this workflow. The workflow rejects a mismatch between the tag and extension manifest.
 3. Select **Set as a pre-release** for a Marketplace prerelease. Leave it unchecked for a stable version. Publish the GitHub release.
 4. Check **Actions > Publish to VS Code Marketplace**. The job preserves the tested VSIX and helper tarball as a workflow artifact before attempting upload. Download that artifact and attach the matching helper tarball to the GitHub release so target developers can install it. You can attach the VSIX there too.
 
 | GitHub release | Marketplace result |
 | --- | --- |
-| `v0.1.1`, prerelease checked | Version `0.1.1`, prerelease channel |
-| `v0.1.2`, prerelease unchecked | Version `0.1.2`, stable channel |
-| `v0.1.1-beta.1` | Rejected: Marketplace versions do not accept suffixes |
+| `v1.1.0`, prerelease checked | Version `1.1.0`, prerelease channel |
+| `v1.0.0`, prerelease unchecked | Version `1.0.0`, stable channel |
+| `v1.0.0-beta.1` | Rejected: Marketplace versions do not accept suffixes |
 | Draft release or tag push without a published release | No Marketplace job |
 | Manual workflow run on `main` | Publisher-access verification only, no upload |
 
