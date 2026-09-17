@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <title>Live Webview: live reload for VS Code webviews</title>
+  <desc>See frontend changes without restarting your extension host. Edit, build, and reload registered views.</desc>
+  <rect width="1280" height="640" fill="#202623"/>
+  <g transform="translate(48 84) scale(2.4)">
+  
+  
+  <!-- Export of the approved study. Both content areas are 3:2; the front is scaled by 2/3. -->
+  <rect x="20" y="30" width="110" height="90" rx="17.778" fill="#78DDB4"/>
+  <path d="M30 50H120V102.222Q120 110 112.222 110H37.778Q30 110 30 102.222Z" fill="#202623"/>
+  <rect x="48" y="60.8" width="54" height="7.2" rx="1" fill="#F4F5ED"/>
+  <rect x="48" y="72.8" width="36" height="4.8" rx="1" fill="#F4F5ED"/>
+  <rect x="70" y="80" width="70" height="50" rx="10" fill="#202623"/>
+  <rect x="75" y="85" width="60" height="40" rx="5" fill="#F4F5ED"/>
+  <rect x="87" y="92.2" width="36" height="4.8" rx="1" fill="#202623"/>
+  <rect x="87" y="100.2" width="24" height="3.2" rx="1" fill="#202623"/>
+
+</g>
+  <g font-family="Rubik" font-weight="600">
+    <text x="490" y="207" fill="#F4F5ED" font-size="76" letter-spacing="-2">Live Webview</text>
+    <text x="494" y="278" fill="#78DDB4" font-size="40">Live reload for</text>
+    <text x="494" y="328" fill="#78DDB4" font-size="40">VS Code webviews.</text>
+    <text x="494" y="387" fill="#B5BFB8" font-size="25">See frontend changes.</text>
+    <text x="494" y="423" fill="#B5BFB8" font-size="25">Keep your extension host running.</text>
+    <path d="M80 493H1200" stroke="#405047"/>
+    <text x="80" y="557" fill="#F4F5ED" font-size="27">Edit your frontend</text>
+    <path d="M350 548H374M366 540L374 548L366 556" fill="none" stroke="#78DDB4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="424" y="557" fill="#F4F5ED" font-size="27">Build succeeds</text>
+    <path d="M674 548H698M690 540L698 548L690 556" fill="none" stroke="#78DDB4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="748" y="557" fill="#F4F5ED" font-size="27">Registered views reload</text>
+  </g>
+</svg>

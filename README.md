@@ -40,6 +40,6 @@ Stop debugging and terminate the **fixture watch** task when finished. See [Gett
 
 Host code changes still require a rebuild and debug restart. Remote hosts, browser VS Code, message inspection, scenarios, and framework HMR are outside v0.1. The extension ID is `JDeffner.live-webview`. GitHub Releases provides the VSIX and matching helper tarball; the helper is not on npm.
 
-## Brand and license
+## License
 
-Source code and original artwork use the [MIT license](LICENSE.txt). The [brand assets](docs/branding/README.md) include the approved vector mark and header. The bundled Rubik font uses its own [SIL Open Font License](docs/branding/OFL.txt).
+Source code and original artwork use the [MIT license](LICENSE.txt). The bundled Rubik font uses its own [SIL Open Font License](docs/branding/OFL.txt).
