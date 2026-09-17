@@ -1,56 +1,37 @@
 # Publish a Marketplace release
 
-The [Marketplace workflow](../.github/workflows/marketplace.yml) runs when a GitHub release is **published**. Drafts and ordinary commits do not publish an extension. It checks out the release tag, validates the version, builds and tests the project, packages the selected channel, tests the installed VSIX with the independent helper, then uploads that same VSIX to the Marketplace.
+The [Marketplace workflow](../.github/workflows/marketplace.yml) publishes automatically when you publish a GitHub release. A prerelease goes to the Marketplace prerelease channel; a stable release goes to the stable channel. Drafts and ordinary commits do not upload an extension.
+
+The job checks out the release tag, validates the version, builds and tests the project, packages the selected channel, tests the installed VSIX with the independent helper, then uploads that same VSIX.
 
 ## One-time setup
 
-Publishing uses a Microsoft Entra app registration and GitHub OpenID Connect. It does not use a PAT or client secret. The GitHub job signs in through `azure/login` and `vsce` uses that Azure CLI identity. The app-registration route uses tenant-level login with `allow-no-subscriptions: true`; no Azure subscription ID or Azure resource role is needed for this workflow. See [Azure Login's tenant-only option](https://github.com/Azure/login#login-without-subscription).
+The workflow uses one secret, `VSCE_PAT`. This route does not need an Entra app registration, a new Microsoft account, or an Azure DevOps directory connection. Use the existing Microsoft account that has publishing access to **JDeffner**.
 
-### Register the application
+1. Open [Azure DevOps personal access tokens](https://dev.azure.com/jdevner/_usersSettings/tokens) with that account and select **New Token**.
+2. Set the name to `Live Webview GitHub publishing`. Choose **All accessible organizations**. Under **Custom defined**, select **Show all scopes**, then **Marketplace: Manage**. Do not select Full access.
+3. Choose an expiration date and create the token. Store it in your password manager, not in source or chat.
+4. Open the repository's [environments](https://github.com/JDeffner/live-webview/settings/environments), select **marketplace**, and add an **environment secret** named `VSCE_PAT` with that token as its value. It must be a secret, not a variable.
+5. Once this workflow is on `main`, open **Actions > Publish to VS Code Marketplace > Run workflow** and select `main`. This checks publisher access without uploading anything.
 
-In Microsoft Entra, open **App registrations → New registration**:
+The environment permits tags matching `v*` and the `main` branch. Keep those restrictions: releases run from tags, while the manual credential check runs only on `main`. No token has been supplied or Marketplace upload verified as part of preparing this change.
 
-| Field | Value |
-| --- | --- |
-| Name | `Live-Webview` |
-| Supported account types | Single tenant, this directory only |
-| Redirect URI | Leave empty |
+Microsoft's [publishing guide](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#get-a-personal-access-token) documents the token scope and organization selection. If policy prevents creating the token, retain the exact error; changing the workflow cannot override an account policy.
 
-Register the app. Its Overview page supplies the **Application (client) ID** and **Directory (tenant) ID**. These are identifiers, not secrets. Set them as `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables in GitHub's [marketplace environment](https://github.com/JDeffner/live-webview/settings/environments). Do not create a client secret or add interactive sign-in permissions for this job.
+## Token lifetime and future authentication
 
-### Trust the GitHub environment
+This is an interim authentication route. Microsoft currently states that global Azure DevOps PATs retire on **1 December 2026**. An earlier token expiration also stops publishing until the secret is replaced. Set a reminder before the selected expiration date. See the [retirement notice](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#publishing-extensions).
 
-Open the app's **Certificates & secrets → Federated credentials → Add credential**. Select **Other issuer** and enter:
+As checked on 17 September 2026, Microsoft's current `vsce` source and README implement direct GitHub trusted publishing through `--oidc`. However, the option was [hidden as unannounced](https://github.com/microsoft/vscode-vsce/pull/1297), and availability of Marketplace policy configuration for this publisher has not been verified. Do not treat a CLI flag alone as a working publishing setup. Once the publisher can configure a trusted policy, upgrade the pinned tool, configure repository/workflow trust, and verify the exchange before switching. See [vsce trusted publishing](https://github.com/microsoft/vscode-vsce#trusted-publishing).
 
-| Field | Exact value |
-| --- | --- |
-| Issuer | `https://token.actions.githubusercontent.com` |
-| Subject identifier | `repo:JDeffner@134447802/live-webview@1367030344:environment:marketplace` |
-| Audience | `api://AzureADTokenExchange` |
-| Name | `github-live-webview-marketplace` |
-
-The same values are available in [azure-federated-credential.json](azure-federated-credential.json). This repository has immutable OIDC subjects enabled, verified through GitHub's repository API. The owner ID and repository ID are part of its subject. Do not substitute the older `repo:JDeffner/live-webview:environment:marketplace` example. See [Microsoft's immutable-subject guide](https://learn.microsoft.com/en-us/entra/workload-id/workload-identities-github-immutable-subjects).
-
-The GitHub environment permits tags matching `v*` and the `main` branch. Published releases use tags. The manual identity check runs only on `main` and cannot publish an extension. Keep these environment restrictions when changing the workflow.
-
-### Grant Marketplace access
-
-Run **Actions → Publish to VS Code Marketplace → Run workflow** on `main`. This manual run authenticates and displays **Marketplace identity ID** in its summary, then checks publishing rights. It never uploads a package. On the first run, the rights check can fail until the next step is complete.
-
-Open [Visual Studio Marketplace publisher management](https://marketplace.visualstudio.com/manage/publishers/JDeffner), select **Members**, and add the returned identity ID as **Contributor**. Use the ID returned by the profile API, not the app's client ID or application object ID. Microsoft's [publishing guide](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#secure-automated-publishing-to-visual-studio-marketplace) describes this publisher membership step. Rerun the manual workflow to verify access before making a release.
-
-If the profile API cannot resolve the identity, check whether the app's service principal must first be added to an Azure DevOps organization connected to the tenant. For that organization step, use the service principal object ID from **Enterprise applications**, not the application-registration object ID. See [Azure DevOps service-principal setup](https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/service-principal-managed-identity). Keep the profile API failure distinct from a publisher permission failure; neither means that a package was uploaded.
-
-The extension publisher and helper default ID are now `JDeffner` and `JDeffner.live-webview`. The old GitHub v0.1.0 download uses `local.live-webview`; use its matching old helper, or pass `companionId: 'local.live-webview'` explicitly when testing that old VSIX with a newer helper. New source packages use the Marketplace identity. No Marketplace upload has been performed as part of preparing this workflow.
-
-The earlier PAT workflow has been replaced. A saved `VSCE_PAT` secret is no longer referenced. Global Azure DevOps PATs retire on **1 December 2026**; the current workflow obtains short-lived Entra credentials for each run.
+The earlier Entra workflow has been replaced by this simpler token flow. `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and the federated credential are not used by this workflow. This source change does not delete any Azure accounts, registrations, credentials, or GitHub variables.
 
 ## Make a release
 
 1. Set `packages/extension/package.json` to the version you will release. Use numeric `MAJOR.MINOR.PATCH`. Update the root version to match; update the helper version when its contents change. The current source is prepared as `0.1.1`, without creating a release.
 2. Commit the changes and make a matching GitHub release tag, such as `v0.1.1`, from a commit containing this workflow. The workflow rejects a mismatch between the tag and extension manifest.
 3. Select **Set as a pre-release** for a Marketplace prerelease. Leave it unchecked for a stable version. Publish the GitHub release.
-4. Check **Actions → Publish to VS Code Marketplace**. The job preserves the tested VSIX and helper tarball as a workflow artifact before attempting upload. Download that artifact and attach the matching helper tarball to the GitHub release so target developers can install it. You can attach the VSIX there too.
+4. Check **Actions > Publish to VS Code Marketplace**. The job preserves the tested VSIX and helper tarball as a workflow artifact before attempting upload. Download that artifact and attach the matching helper tarball to the GitHub release so target developers can install it. You can attach the VSIX there too.
 
 | GitHub release | Marketplace result |
 | --- | --- |
@@ -58,15 +39,17 @@ The earlier PAT workflow has been replaced. A saved `VSCE_PAT` secret is no long
 | `v0.1.2`, prerelease unchecked | Version `0.1.2`, stable channel |
 | `v0.1.1-beta.1` | Rejected: Marketplace versions do not accept suffixes |
 | Draft release or tag push without a published release | No Marketplace job |
-| Manual workflow run on `main` | Identity and publisher-access verification only, no upload |
+| Manual workflow run on `main` | Publisher-access verification only, no upload |
 
-Use a new numeric version for each upload, including a switch from prerelease to stable. Editing an existing release's checkbox does not republish or convert its Marketplace version. Prerelease users can receive a higher stable version, so plan version ordering for both channels. These constraints come from [VS Code's prerelease rules](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#pre-release-extensions). The workflow uses [`release: published`](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#release) because it covers both stable releases and prereleases, including publication from drafts.
+Use a new numeric version for each upload, including a switch from prerelease to stable. Editing an existing release's checkbox does not republish or convert its Marketplace version. Prerelease users can receive a higher stable version, so plan version ordering for both channels. See [VS Code's prerelease rules](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#pre-release-extensions). The workflow uses [`release: published`](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#release) because it covers both stable releases and prereleases, including publication from drafts.
 
-## Configuration or authentication failures
+The publisher and helper default ID are `JDeffner` and `JDeffner.live-webview`. The old GitHub v0.1.0 download uses `local.live-webview`; use its matching old helper, or pass `companionId: 'local.live-webview'` explicitly when testing that old VSIX with a newer helper. New source packages use the Marketplace identity.
 
-Missing client or tenant IDs stop the job before login. A federated-credential mismatch fails in **Sign in with the GitHub federated identity**; compare the error's subject with the exact Azure subject above. Azure may need a short time to propagate a new credential. Publisher authorization errors mean the login succeeded but the identity still needs access under `JDeffner`.
+## Authentication failures
 
-Use the manual identity check to test configuration without releasing. Adding configuration does not retroactively trigger old releases. The existing v0.1.0 tag predates this workflow. Publish a new release from the updated source to trigger upload. Releases created by another workflow with its default `GITHUB_TOKEN` may not trigger a second workflow; create the release through GitHub's UI, your authenticated CLI, or an appropriately configured GitHub App.
+A missing `VSCE_PAT` stops the job with a setup error. An expired token, incorrect scope, or account without publisher access fails authentication. Replace the environment secret as needed, then run the manual check again. The token is exposed only to the publish or verification step, not to dependency installation, build, or tests.
+
+Adding a secret does not retroactively trigger old releases. The existing v0.1.0 tag predates this workflow. Publish a new release from the updated source to trigger upload. Releases created by another workflow with its default `GITHUB_TOKEN` may not trigger a second workflow; create the release through GitHub's UI, your authenticated CLI, or an appropriately configured GitHub App.
 
 If the Marketplace already accepted the version, inspect it before retrying. The workflow does not ignore duplicate-version errors or delete published versions. It publishes only the VS Code extension; it does not publish the helper to npm or replace GitHub release attachments.
 
@@ -78,4 +61,4 @@ pnpm prepare-fixture
 pnpm integration-test --packaged --independent
 ```
 
-Use `pnpm package` without the flag to build a stable VSIX. Output names follow the extension and helper manifest versions. Packaging never publishes and needs no Azure login. Azure Login removes its runner login session during post-job cleanup; the workflow does not write tokens to source, artifacts, or logs.
+Use `pnpm package` without the flag to build a stable VSIX. Output names follow the extension and helper manifest versions. Packaging never publishes and needs no token or Azure login.

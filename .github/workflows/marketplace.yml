@@ -20,7 +20,6 @@ jobs:
     environment: marketplace
     permissions:
       contents: read
-      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -59,28 +58,17 @@ jobs:
             artifacts/*.tgz
           if-no-files-found: error
           overwrite: true
-      - name: Check identity configuration
-        env:
-          AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
-          AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-        run: |
-          if [ -z "$AZURE_CLIENT_ID" ] || [ -z "$AZURE_TENANT_ID" ]; then
-            echo "::error::Set AZURE_CLIENT_ID and AZURE_TENANT_ID in the marketplace environment. See docs/releases.md."
-            exit 1
-          fi
-      - name: Sign in with the GitHub federated identity
-        uses: azure/login@v2
-        with:
-          client-id: ${{ vars.AZURE_CLIENT_ID }}
-          tenant-id: ${{ vars.AZURE_TENANT_ID }}
-          allow-no-subscriptions: true
       - name: Publish tested VSIX
         env:
-          AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
           VSIX_PATH: ${{ steps.release.outputs.vsix }}
           PRE_RELEASE: ${{ steps.release.outputs.pre_release }}
         run: |
-          args=(--azure-credential --packagePath "$VSIX_PATH")
+          if [ -z "$VSCE_PAT" ]; then
+            echo "::error::Add VSCE_PAT to the marketplace environment secrets. See docs/releases.md. No upload was attempted."
+            exit 1
+          fi
+          args=(--packagePath "$VSIX_PATH")
           if [ "$PRE_RELEASE" = "true" ]; then args+=(--pre-release); fi
           pnpm exec vsce publish "${args[@]}"
 
@@ -91,7 +79,6 @@ jobs:
     environment: marketplace
     permissions:
       contents: read
-      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -104,30 +91,12 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - name: Check identity configuration
-        env:
-          AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
-          AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-        run: |
-          if [ -z "$AZURE_CLIENT_ID" ] || [ -z "$AZURE_TENANT_ID" ]; then
-            echo "::error::Set AZURE_CLIENT_ID and AZURE_TENANT_ID in the marketplace environment. See docs/releases.md."
-            exit 1
-          fi
-      - name: Sign in with the GitHub federated identity
-        uses: azure/login@v2
-        with:
-          client-id: ${{ vars.AZURE_CLIENT_ID }}
-          tenant-id: ${{ vars.AZURE_TENANT_ID }}
-          allow-no-subscriptions: true
-      - name: Show Marketplace identity ID
-        run: |
-          identity_id=$(az rest --method get --url https://app.vssps.visualstudio.com/_apis/profile/profiles/me --resource 499b84ac-1321-427f-aa17-267ca6975798 --query id --output tsv)
-          if [ -z "$identity_id" ]; then
-            echo "::error::Azure DevOps returned no Marketplace identity ID. See docs/releases.md."
-            exit 1
-          fi
-          printf 'Marketplace identity ID: %s\n' "$identity_id" | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Verify publisher access without uploading
         env:
-          AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-        run: pnpm exec vsce verify-pat JDeffner --azure-credential
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          if [ -z "$VSCE_PAT" ]; then
+            echo "::error::Add VSCE_PAT to the marketplace environment secrets. See docs/releases.md."
+            exit 1
+          fi
+          pnpm exec vsce verify-pat JDeffner
