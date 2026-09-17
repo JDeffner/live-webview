@@ -9,7 +9,7 @@ Reload your extension's webviews after a successful frontend build, inside the r
 ## Quick start
 
 1. Download the VSIX and helper tarball from [GitHub Releases](https://github.com/JDeffner/live-webview/releases). Install the VSIX with **Extensions: Install from VSIX...** in the profile used by your target's Development Host.
-2. Add the helper to your target: `pnpm add -D "path/to/webview-dev-helper-0.1.0.tgz"`.
+2. Add the matching helper to your target: `pnpm add -D "path/to/webview-dev-helper-0.1.1.tgz"`.
 3. [Connect the helper](https://github.com/JDeffner/live-webview/wiki/Integration) in your development build. Register each build, then each panel or resolved sidebar view with a callback that regenerates its HTML.
 4. [Add a successful-build signal](https://github.com/JDeffner/live-webview/wiki/Build-signals) to your frontend build. Start the watch task, launch the target with F5, and open its normal webview.
 5. Save a frontend change. After the build succeeds, visible registered targets reload. Use **Explorer → Live Webview** to reload one instance, pause, or resume. **Live Webview: Open Logs** shows diagnostics.
@@ -38,7 +38,7 @@ Stop debugging and terminate the **fixture watch** task when finished. See [Gett
 - [Development checks](docs/development.md) and [validation evidence](docs/validation.md)
 - [Marketplace release workflow](docs/releases.md), including the one-time publishing token setup and automatic stable/prerelease uploads.
 
-Host code changes still require a rebuild and debug restart. Remote hosts, browser VS Code, message inspection, scenarios, and framework HMR are outside v0.1. The preview is distributed through GitHub; Marketplace publishing is not yet active, and the helper is not on npm.
+Host code changes still require a rebuild and debug restart. Remote hosts, browser VS Code, message inspection, scenarios, and framework HMR are outside v0.1. The extension ID is `JDeffner.live-webview`. GitHub Releases provides the VSIX and matching helper tarball; the helper is not on npm.
 
 ## Brand and license
 

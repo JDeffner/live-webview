@@ -20,6 +20,6 @@ It is a developer tool for webviews that you own. Install the companion, connect
 
 Use local desktop VS Code 1.74 or newer, a Node extension host, and a trusted workspace. The target must run in Development mode with the helper explicitly enabled. The companion must be available in that same host.
 
-The v0.1.0 preview is available from [GitHub Releases](https://github.com/JDeffner/live-webview/releases/tag/v0.1.0). It is not on the Marketplace, and the helper is not on npm. Remote hosts, browser VS Code, framework HMR, message inspection, and automatic attachment to arbitrary extensions are outside this version.
+Download the preview VSIX and matching helper tarball from [GitHub Releases](https://github.com/JDeffner/live-webview/releases). Version 0.1.1 uses the extension ID `JDeffner.live-webview`. The helper is not on npm. Remote hosts, browser VS Code, framework HMR, message inspection, and automatic attachment to arbitrary extensions are outside this version.
 
 [Source repository](https://github.com/JDeffner/live-webview) · [Development checks](https://github.com/JDeffner/live-webview/blob/main/docs/development.md) · [Validation evidence](https://github.com/JDeffner/live-webview/blob/main/docs/validation.md) · [Report an issue](https://github.com/JDeffner/live-webview/issues)

@@ -4,7 +4,7 @@ Start with the fixture if you want to see a reload before changing your own exte
 
 ## Install the preview release
 
-Download `live-webview-0.1.0.vsix` and `webview-dev-helper-0.1.0.tgz` from the release. In your target development profile, run **Extensions: Install from VSIX...** and select the VSIX. Follow [Add the helper to a target](https://github.com/JDeffner/live-webview/wiki/Integration) to connect your webview and frontend build. The standalone fixture below demonstrates the full setup in an isolated host.
+Download `live-webview-0.1.1.vsix` and `webview-dev-helper-0.1.1.tgz` from the release. In your target development profile, run **Extensions: Install from VSIX...** and select the VSIX. Follow [Add the helper to a target](https://github.com/JDeffner/live-webview/wiki/Integration) to connect your webview and frontend build. The standalone fixture below demonstrates the full setup in an isolated host.
 
 ## Run the fixture
 
@@ -59,7 +59,7 @@ Keep your target's launch configuration. For an isolated installation, add these
 From that target's project root, install the downloaded VSIX into those same directories before launching:
 
 ```sh
-code --user-data-dir .dev-profile --extensions-dir .dev-extensions --install-extension "absolute/path/to/live-webview-0.1.0.vsix"
+code --user-data-dir .dev-profile --extensions-dir .dev-extensions --install-extension "absolute/path/to/live-webview-0.1.1.vsix"
 ```
 
 Replace the quoted path with your actual download path. Add `.dev-profile/`, `.dev-extensions/`, and `.webview-dev/` to the target's ignore files. Launch with F5, open the target's normal webview, and look for its registration in **Explorer → Live Webview** in the new host.
